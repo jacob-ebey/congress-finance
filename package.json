@@ -1,0 +1,20 @@
+{
+  "name": "congress-finance",
+  "version": "1.0.0",
+  "description": "A graph-ql wrapper and visualization of OpenSecrets API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jacob Ebey (jacob.ebey@live.com)",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "graphql-yoga": "^1.3.3",
+    "node-fetch": "^2.0.0",
+    "memory-cache": "^0.2.0",
+    "xml2js": "^0.4.19"
+  }
+}

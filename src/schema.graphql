@@ -1,0 +1,67 @@
+type Query {
+  candidates(stateCode: String!): [Candidate!]!
+  candidateSummary(cycle: Int, cid: ID!): CandidateSummary!
+  candContrib(cycle: Int, cid: ID!): [CandidateContribution!]!
+  candIndustry(cycle: Int, cid: ID!): [IndustryContribution!]!
+}
+
+type Candidate {
+  cid: ID!
+  firstlast: String!
+  lastname: String!
+  party: String!
+  office: String!
+  gender: String!
+  first_elected: Int!
+  exit_code: Int!
+  comments: String
+  phone: String!
+  fax: String!
+  website: String!
+  webform: String
+  congress_office: String!
+  bioguide_id: String!
+  votesmart_id: String
+  feccandid: String!
+  twitter_id: String
+  youtube_url: String
+  facebook_id: String
+  birthdate: String!
+
+  summary: CandidateSummary!
+  contributions: [CandidateContribution!]!
+  industries: [IndustryContribution!]!
+}
+
+type CandidateSummary {
+  cand_name: String!
+  cash_on_hand: Float!
+  chamber: String
+  cid: String!
+  cycle: Int!
+  debt: Float!
+  first_elected: Int
+  last_updated: String!
+  next_election: Int
+  origin: String!
+  party: String!
+  source: String!
+  spent: Float!
+  state: String
+  total: Float!
+}
+
+type CandidateContribution {
+  org_name: String!
+  indivs: Float!
+  pacs: Float!
+  total: Float!
+}
+
+type IndustryContribution {
+  industry_code: String!
+  industry_name: String!
+  indivs: Float!
+  pacs: Float!
+  total: Float!
+}

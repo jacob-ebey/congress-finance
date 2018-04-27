@@ -41,6 +41,10 @@ body {
   z-index: 1;
 }
 
+#error {
+  color: #da4733;
+}
+
 .load-bar {
   position: absolute;
   z-index: 2;

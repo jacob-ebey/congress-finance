@@ -19,8 +19,9 @@
   </div>
 
   <div id="menu">
-    <input id="state-input" placeholder="State Code (WA)" />
+    <input id="state-input" placeholder="State Code (WA)" onkeypress="return raiseOnEnter(event, loadState)" />
     <button onclick="loadState()">Load Candidates</button>
+    <span id="error"></span>
   </div>
 
   <div id="visualization"></div>

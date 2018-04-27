@@ -21,3 +21,11 @@ function queryGraph (query, variables) {
     }))
   })
 }
+
+// eslint-disable-next-line
+function raiseOnEnter (event, action) {
+  if (event.keyCode === 13) {
+    action()
+    return false
+  }
+}

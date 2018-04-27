@@ -27,6 +27,7 @@ var candidatesByState = `
 
 var stateInput = document.getElementById('state-input')
 var progress = document.getElementById('progress')
+var error = document.getElementById('error')
 var container = document.getElementById('visualization')
 
 var options = {
@@ -114,8 +115,8 @@ function loadState () {
         })
       })
     })
-    .catch(function (err) {
-      console.error(err)
+    .catch(function () {
+      error.innerText = 'Sorry, I most likely exceeded my API call count for the day :('
     })
     .then(function () {
       if (--loadingCount === 0) {

@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const express = require('express')
 const { GraphQLServer } = require('graphql-yoga')
+const mongoose = require('mongoose')
 
 const candidates = require('./resolvers/candidates')
 
@@ -20,6 +21,8 @@ const server = new GraphQLServer({
 })
 
 server.express.use(express.static('./src/public'))
+
+mongoose.connect(process.env.MONGO_DB_CONNECTION)
 
 server.start(
   {

@@ -93,12 +93,14 @@ function loadState () {
   queryGraph(candidatesByState, { stateCode })
     .then(function (result) {
       result.data.candidates.forEach(function (candidate) {
-        nodes.add({
-          group: 0,
-          id: candidate.cid,
-          label: `${candidate.firstlast}\n${formatCurrency(candidate.summary.total)}`,
-          size: 20
-        })
+        if (!nodes.get(candidate.cid)) {
+          nodes.add({
+            group: 0,
+            id: candidate.cid,
+            label: `${candidate.firstlast}\n${formatCurrency(candidate.summary.total)}`,
+            size: 20
+          })
+        }
 
         candidate.industries.forEach(function (industry) {
           if (!nodes.get(industry.industry_code)) {
@@ -111,7 +113,14 @@ function loadState () {
             })
           }
 
-          edges.add({ from: industry.industry_code, to: candidate.cid, label: formatCurrency(industry.total) })
+          if (!edges.get(`${industry.industry_code}_${candidate.cid}`)) {
+            edges.add({
+              id: `${industry.industry_code}_${candidate.cid}`,
+              from: industry.industry_code,
+              to: candidate.cid,
+              label: formatCurrency(industry.total)
+            })
+          }
         })
       })
     })

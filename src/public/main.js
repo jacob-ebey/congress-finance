@@ -21,6 +21,12 @@ var candidatesByState = `
         industry_name
         total
       }
+      contributions {
+        org_name
+        indivs
+        pacs
+        total
+      }
     }
   }
 `
@@ -59,8 +65,8 @@ network.on('selectNode', function (params) {
   var id = params.nodes[0]
   var connectedIds = network.getConnectedNodes(id)
 
-  nodes.forEach((node) => {
-    if (node.id !== id && connectedIds.every((i) => node.id !== i)) {
+  nodes.forEach(function (node) {
+    if (node.id !== id && connectedIds.every(function (i) { return node.id !== i })) {
       node.hidden = true
     } else {
       node.hidden = false
@@ -71,7 +77,7 @@ network.on('selectNode', function (params) {
 })
 
 network.on('deselectNode', function (params) {
-  nodes.forEach((node) => {
+  nodes.forEach(function (node) {
     node.hidden = false
 
     nodes.update(node)
@@ -88,6 +94,7 @@ function loadState () {
     return
   }
 
+  error.innerText = ''
   loadingCount++
   progress.style.visibility = 'visible'
   queryGraph(candidatesByState, { stateCode })
@@ -109,7 +116,7 @@ function loadState () {
               group: 1,
               id: industry.industry_code,
               label: industry.industry_name,
-              size: 10
+              size: 15
             })
           }
 
@@ -122,10 +129,32 @@ function loadState () {
             })
           }
         })
+
+        candidate.contributions.forEach(function (contribution) {
+          if (!nodes.get(contribution.org_name)) {
+            nodes.add({
+              shape: 'dot',
+              group: 2,
+              id: contribution.org_name,
+              label: contribution.org_name,
+              size: 15
+            })
+          }
+
+          if (!edges.get(`${contribution.org_name}_${candidate.cid}`)) {
+            edges.add({
+              id: `${contribution.org_name}_${candidate.cid}`,
+              from: contribution.org_name,
+              to: candidate.cid,
+              label: formatCurrency(contribution.total)
+            })
+          }
+        })
       })
     })
-    .catch(function () {
+    .catch(function (err) {
       error.innerText = 'Sorry, I most likely exceeded my API call count for the day :('
+      console.error(err)
     })
     .then(function () {
       if (--loadingCount === 0) {

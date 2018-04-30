@@ -153,7 +153,7 @@ function loadState () {
       })
     })
     .catch(function (err) {
-      error.innerText = 'Sorry, I most likely exceeded my API call count for the day :('
+      error.innerText = 'Sorry, I most likely exceeded my API call count for the day :( Try a state like WA that has been cached.'
       console.error(err)
     })
     .then(function () {
